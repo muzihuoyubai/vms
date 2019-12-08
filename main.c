@@ -187,7 +187,9 @@ int main() {
             case ROOT:
                 printf("What would you like to do?\n");
                 menuDisplay(menu);
-                menuScanUserInput(menu);
+                if (!menuScanUserInput(menu)) {
+                    break;
+                }
                 if (strcmp(menu->userLastInput, ROOT_MENU[0].menuOpt) == 0) {
                     printProductList(ROOT_MENU[0].menuOpt);
                     clearUserInput(menu);
@@ -209,7 +211,9 @@ int main() {
             case INSERT_ICON:
                 printf("(%s) Which coin would you like to insert?\n", menu->curMenu->menuOpt);
                 menuDisplay(menu);
-                menuScanUserInput(menu);
+                if (!menuScanUserInput(menu)) {
+                    break;
+                }
                 if (strcmp(menu->userLastInput, INSERT_ICON_MENU[4].menuOpt) == 0) {
                     menuGoBack(menu);
                     clearUserInput(menu);
@@ -239,7 +243,9 @@ int main() {
                 displayVending();
                 printf("(%s) Which product button would you like to press?\n", menu->curMenu->menuOpt);
                 menuDisplay(menu);
-                menuScanUserInput(menu);
+                if (!menuScanUserInput(menu)) {
+                    break;
+                }
                 if (strcmp(menu->userLastInput, PRESS_PROD_BTN_MENU[5].menuOpt) == 0) {
                     menuGoBack(menu);
                     PROD_SELL_ICON = '=';
@@ -290,7 +296,9 @@ int main() {
                 } else {
                     printf("(%s) What would you like to do?\n", menu->curMenu->menuOpt);
                     menuDisplay(menu);
-                    menuScanUserInput(menu);
+                    if (!menuScanUserInput(menu)) {
+                        break;
+                    }
 
                     if (strcmp(menu->userLastInput, SERVICE_MENU[0].menuOpt) == 0) {
                         printMachineStatus(menu);
@@ -312,7 +320,9 @@ int main() {
                 printf("(%s-%s) Which product would you like to refill?\n", menu->curMenu->menuOpt,
                        SERVICE_MENU[2].menuOpt);
                 menuDisplay(menu);
-                menuScanUserInput(menu);
+                if (!menuScanUserInput(menu)) {
+                    break;
+                }
 
                 if (strcmp(menu->userLastInput, SERVICE_REFILE_MENU[5].menuOpt) == 0) {
                     menuGoBack(menu);
@@ -329,7 +339,9 @@ int main() {
                 printf("(%s-%s) Which product would you like to change?\n", menu->curMenu->menuOpt,
                        SERVICE_MENU[3].menuOpt);
                 menuDisplay(menu);
-                menuScanUserInput(menu);
+                if (!menuScanUserInput(menu)) {
+                    break;
+                }
 
                 if (strcmp(menu->userLastInput, SERVICE_REFILE_MENU[5].menuOpt) == 0) {
                     menuGoBack(menu);

@@ -82,7 +82,7 @@ BOOL menuScanUserInput(MENU *menu) {
     scanf("%s", menu->userLastInput);
     if (findMenuByOpt(menu->curMenu, menu->userLastInput) == NULL) {
         printf("Invalid choice!\n");
-        return menuScanUserInput(menu);
+        return FALSE;
     } else {
         return TRUE;
     }
