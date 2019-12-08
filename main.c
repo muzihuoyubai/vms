@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include "menu.h"
-#include "product.h"
 
 #define MACHINE_PROD_ENABLE 'O'
 #define MACHINE_PROD_OUT 'X'
@@ -28,6 +27,12 @@ enum MENU_LEVEL {
     ROOT, INSERT_ICON, PRESS_PROD_BTN, PRESS_RETURN_BTN, SERVICE_MENU_LEVEL, SERVICE_REFILL_PRODUCT,
     SERVICE_CHANGE_PRODUCT
 };
+
+typedef struct Product {
+    char name[20];
+    int price;
+    int stock;
+} Product;
 
 struct MenuNode ROOT_MENU[] = {
         {" 1. Read product information\n",          "1_1rdi", "1", ROOT,               NULL, NULL},
@@ -255,7 +260,6 @@ int main() {
 
                 } else {
                     printf("invalid choice\n");
-                    displayVending();
                     clearUserInput(menu);
                 }
                 break;
@@ -352,9 +356,6 @@ int main() {
         }
 
     }
-
-
-    return 0;
 }
 
 void withDrawMoney(MENU *menu) {

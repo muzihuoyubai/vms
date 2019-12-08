@@ -4,6 +4,12 @@
 
 #include "menu.h"
 
+typedef struct Product {
+    char name[20];
+    int price;
+    int stock;
+} Product;
+
 MenuNode *findMenuByOpt(MenuNode *parentNode, char *opt);
 
 void clearUserInput(MENU *menu) {
