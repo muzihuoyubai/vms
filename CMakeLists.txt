@@ -3,4 +3,4 @@ project(vms C)
 
 set(CMAKE_C_STANDARD 99)
 
-add_executable(vms main.c)
+add_executable(vms main.c List.c ListGenericFn.c menu.c)
