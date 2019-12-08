@@ -82,7 +82,7 @@ struct MenuNode SERVICE_CHANGE_MENU[] = {
 };
 
 
-struct Product productList[] = {
+struct Product PROD_LIST[] = {
         {"Juice",  10, 5},
         {"Cola",   6,  1},
         {"Tea",    5,  2},
@@ -117,7 +117,7 @@ void displayVending() {
 
     printf("|");
     for (int i = 0; i < PROD_LIST_SIZE; i++) {
-        printf("  $%2d", productList[i].price);
+        printf("  $%2d", PROD_LIST[i].price);
     }
     printf("  |\n");
 
@@ -125,9 +125,9 @@ void displayVending() {
     char prodFlag;
     for (int i = 0; i < PROD_LIST_SIZE; i++) {
         prodFlag = MACHINE_PROD_DEFAULT;
-        if (productList[i].stock == 0) {
+        if (PROD_LIST[i].stock == 0) {
             prodFlag = MACHINE_PROD_OUT;
-        } else if (productList[i].price <= INSERT_COIN_TOTAL) {
+        } else if (PROD_LIST[i].price <= INSERT_COIN_TOTAL) {
             prodFlag = MACHINE_PROD_ENABLE;
         }
         printf("  [%c]", prodFlag);
@@ -142,9 +142,9 @@ void displayVending() {
 }
 
 void printProductList(char *menuIndex) {
-    printf("(%s) The displayed products are:", menuIndex);
+    printf("(%s) The displayed products are:\n", menuIndex);
     for (int i = 0; i < PROD_LIST_SIZE; ++i) {
-        printf("%c. %s ($%d)\n", 'A' + i, productList[i].name, productList[i].price);
+        printf("%c. %s ($%d)\n", 'A' + i, PROD_LIST[i].name, PROD_LIST[i].price);
     }
 }
 
@@ -231,6 +231,7 @@ int main() {
                 }
 
             case PRESS_PROD_BTN:
+                displayVending();
                 printf("(%s) Which product button would you like to press?\n", menu->curMenu->menuOpt);
                 menuDisplay(menu);
                 menuScanUserInput(menu);
@@ -244,11 +245,11 @@ int main() {
                 int prodIndex = strtol(menu->userLastInput, NULL, 10) - 1;
                 printf("You have pressed button %c.\n", 'A' + prodIndex);
 
-                if (productList[prodIndex].price <= INSERT_COIN_TOTAL && productList[prodIndex].stock > 0) {
+                if (PROD_LIST[prodIndex].price <= INSERT_COIN_TOTAL && PROD_LIST[prodIndex].stock > 0) {
                     PROD_SELL_ICON = 'A' + prodIndex;
-                    INSERT_COIN_TOTAL -= productList[prodIndex].price;
-                    productList[prodIndex].stock--;
-                    REVENUE_TOTAL += productList[prodIndex].price;
+                    INSERT_COIN_TOTAL -= PROD_LIST[prodIndex].price;
+                    PROD_LIST[prodIndex].stock--;
+                    REVENUE_TOTAL += PROD_LIST[prodIndex].price;
                     displayVending();
                     clearUserInput(menu);
 
@@ -315,7 +316,7 @@ int main() {
                     int productIndex = (int) strtol(menu->userLastInput, NULL, 10) - 1;
                     printf("You have refilled product %c to full.\n",
                            'A' + productIndex);
-                    productList[productIndex].stock = PROD_REFILE_STOCK;
+                    PROD_LIST[productIndex].stock = PROD_REFILE_STOCK;
                     menuGoBack(menu);
                 }
                 break;
@@ -333,14 +334,14 @@ int main() {
                     printf("You are changing product %c.\n",
                            'A' + productIndex);
                     printf("Enter new product name:");
-                    scanf("%s", productList[productIndex].name);
+                    scanf("%s", PROD_LIST[productIndex].name);
 
                     char productPrice[20];
                     printf("Enter new product price:");
                     scanf("%s", productPrice);
 
-                    productList[productIndex].price = (int) strtol(productPrice, NULL, 10);
-                    productList[productIndex].stock = PROD_REFILE_STOCK;
+                    PROD_LIST[productIndex].price = (int) strtol(productPrice, NULL, 10);
+                    PROD_LIST[productIndex].stock = PROD_REFILE_STOCK;
                     printf("The new product %c has been filled to full.", 'A' + productIndex);
                     menuGoBack(menu);
                 }
@@ -367,11 +368,11 @@ void printMachineStatus(MENU *menu) {
     printf("Amount of revenue: $%d\n", REVENUE_TOTAL);
     printf("Amount of inserted coins: $%d\n", INSERT_COIN_TOTAL);
     for (int i = 0; i < PROD_LIST_SIZE; ++i) {
-        if (productList[i].stock == 0) {
-            printf("%c. %s ($%d) (sold out)\n", 'A' + i, productList[i].name, productList[i].price);
+        if (PROD_LIST[i].stock == 0) {
+            printf("%c. %s ($%d) (sold out)\n", 'A' + i, PROD_LIST[i].name, PROD_LIST[i].price);
         } else {
-            printf("%c. %s ($%d) (%d left)\n", 'A' + i, productList[i].name, productList[i].price,
-                   productList[i].stock);
+            printf("%c. %s ($%d) (%d left)\n", 'A' + i, PROD_LIST[i].name, PROD_LIST[i].price,
+                   PROD_LIST[i].stock);
         }
     }
     printf("\n");
